@@ -1,0 +1,42 @@
+html
+head
+link(href="https://fonts.googleapis.com/css?family=Wallpoet", rel = "stylesheet")
+link(href="https://fonts.googleapis.com/css?family=Allerta", rel = "stylesheet")
+link(href='style.css', rel="stylesheet")
+script(src='calculator.js')
+body
+div.container-fluid
+div.row.caption
+div.row
+div.col-md-12.calculator
+p TT DESIGN STUDIO
+sup &reg;
+div.display
+div.input
+p#result 0
+div.current
+p#mod
+div.buttons
+button.red(value = 'ac' onClick="reply_click(this.value)") AC
+button.red(value = 'ce' onClick="reply_click(this.value)") CE
+button.black(value = '/' onClick="reply_click(this.value)") /
+button.black(value = 'x' onClick="reply_click(this.value)") x
+div.buttons
+button.black(value = '7' onClick="reply_click(this.value)") 7
+button.black(value = '8' onClick="reply_click(this.value)") 8
+button.black(value = '9' onClick="reply_click(this.value)") 9
+button.black(value = '-' onClick="reply_click(this.value)") -
+div.buttons
+button.black(value = '4' onClick="reply_click(this.value)") 4
+button.black(value = '5' onClick="reply_click(this.value)") 5
+button.black(value = '6' onClick="reply_click(this.value)") 6
+button.black(value = '+' onClick="reply_click(this.value)") +
+div.buttons3
+button.black(value = '1' onClick="reply_click(this.value)") 1
+button.black(value = '2' onClick="reply_click(this.value)") 2
+button.black(value = '3' onClick="reply_click(this.value)") 3
+button.black#equal(value = '=' onClick="reply_click(this.value)") =
+div.buttons4
+button.black(value = '.' onClick="reply_click(this.value)") .
+button.black(value = '0' onClick="reply_click(this.value)") 0
+button.black(value = '%' onClick="reply_click(this.value)") %
