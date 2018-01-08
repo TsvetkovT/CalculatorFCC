@@ -10,7 +10,9 @@ $(document).ready(function () {
 
     var specialBtn = ['+', '-', '/', '*', '%'];
     var arrHandler = [];
-    var arrCurrent = [];
+    var val1 = '';
+    var val2 = '';
+
 
     var matchPattern = /[^\s()*/%+-]+/g;
 
@@ -43,20 +45,21 @@ $(document).ready(function () {
                 break
 
             case "+":
-                if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-
-                    arrHandler.push('+');
-                    break
-                } else {
-
-                    arrHandler.push(currentStr);
-                    total=eval(arrHandler.join(''));
-                    currentStr = '';
-                    arrHandler = [];
-                    arrHandler.push(total);
-
+                if(currentStr!='' && specialBtn.includes(arrHandler[arrHandler.length-1]) === false){
+                    arrHandler.push(currentStr,input);
+                } else if(currentStr==='' && specialBtn.includes(arrHandler[arrHandler.length-1]) === true){
+                    arrHandler.pop();
+                    arrHandler.push('0',input);
+                } else if (currentStr!='' && specialBtn.includes(arrHandler[arrHandler.length-1]) === true){
+                    arrHandler.pop();
+                    arrHandler.push(input);
+                    total = currentStr;
+                }else if(currentStr!='' && specialBtn.includes(arrHandler[arrHandler.length-1]){
 
                 }
+
+
+
             case "-":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
 
@@ -104,10 +107,10 @@ $(document).ready(function () {
                 }
 
             default:
-                currentStr += input;
+                val1 = currentStr + input;
 
         }
-        console.log(currentStr);
+        console.log(val1);
         console.log(arrHandler);
     return $("#result").html(total);
 
