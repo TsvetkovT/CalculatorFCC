@@ -1,4 +1,7 @@
 /**
+ * Created by TT on 8.01.18 г..
+ */
+/**
  * Created by TT on 6.01.18 г..
  */
 
@@ -10,7 +13,9 @@ $(document).ready(function () {
 
     var specialBtn = ['+', '-', '/', '*', '%'];
     var arrHandler = [];
-    var arrCurrent = [];
+    var sign = '';
+    var val2 = '';
+
 
     var matchPattern = /[^\s()*/%+-]+/g;
 
@@ -27,7 +32,7 @@ $(document).ready(function () {
 
     }
 
-    var currentStr=[];
+    var currentStr='';
     var total;
     function update(input) {
 
@@ -43,29 +48,37 @@ $(document).ready(function () {
                 break
 
             case "+":
-                if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-                    arrHandler.pop();
-                    arrHandler.push(input);
-                    break
-                } else {
 
+                if (arrHandler.length===0 && specialBtn.includes(input) === false){
                     arrHandler.push(currentStr);
-                    currentStr = [];
-                    total=eval(arrHandler.join(''));
-                    arrHandler = [];
-                    arrHandler.push(total);
-
+                } else if (arrHandler.length === 0 && specialBtn.includes(input) === true ){
+                    arrHandler.push(input);
 
                 }
-            case "-":
-                if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
+                else if (arrHandler.length===1 && specialBtn.includes(input) === true){
                     arrHandler.pop();
                     arrHandler.push(input);
+                } else if (arrHandler.length === 1 && specialBtn.includes(arrHandler[1]) === true) {
+
+                    arrHandler = [];
+                    arrHandler.push(input);
+                } else if (arrHandler.length > 1 && arrHandler.length === 2) {
+                    total = eval(arrHandler.join(''));
+                    arrHandler.push(total,input);
+                }
+                break;
+
+
+
+            case "-":
+                if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
+
+                    arrHandler.push('-');
                     break
                 } else {
 
                     arrHandler.push(currentStr);
-                    currentStr = [];
+                    currentStr = '';
                     total=eval(arrHandler.join(''));
                     arrHandler = [];
                     arrHandler.push(total);
@@ -74,13 +87,13 @@ $(document).ready(function () {
                 }
             case "*":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-                    arrHandler.pop();
-                    arrHandler.push(input);
+
+                    arrHandler.push('*');
                     break
                 } else {
 
                     arrHandler.push(currentStr);
-                    currentStr = [];
+                    currentStr = '';
                     total=eval(arrHandler.join(''));
                     arrHandler = [];
                     arrHandler.push(total);
@@ -89,13 +102,13 @@ $(document).ready(function () {
                 }
             case "/":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-                    arrHandler.pop();
-                    arrHandler.push(input);
+
+                    arrHandler.push('/');
                     break
                 } else {
 
                     arrHandler.push(currentStr);
-                    currentStr = [];
+                    currentStr = '';
                     total=eval(arrHandler.join(''));
                     arrHandler = [];
                     arrHandler.push(total);
@@ -104,10 +117,13 @@ $(document).ready(function () {
                 }
 
             default:
-                currentStr += input;
+               currentStr += input;
+
+
+
 
         }
-        console.log(currentStr);
+        console.log("currentStr is:  " + currentStr);
         console.log(arrHandler);
         return $("#result").html(total);
 
