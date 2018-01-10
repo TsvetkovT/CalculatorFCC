@@ -30,14 +30,19 @@ $(".black").each(function (index) {
         var key = $(this).attr('value');
         var result = '';
         var equation = '';
-        var specButtons = ['/', '*', '-', '+', '%', '.', '=']
-        //  var previousClicked = arrHolder[arrHolder.length - 2];
-        //  var lastClicked = arrHolder[arrHolder.length - 1];
+        var specButtons = ['/', '*', '-', '+', '%', '='];
+        var point = ['.'];
 
-        if (specButtons.indexOf(key) < 0) {
-            // $("#mod").append('');
-            // $("#mod").append(key);
-            arrHolder = arrFormula.push(key);
+
+
+
+        if (specButtons.indexOf(key) < 0 && arrFormula !== []) {
+
+            arrFormula.push(key);
+
+        } else if (specButtons.includes(key) === true && arrFormula.length == 0){
+            arrFormula.push('0',key);
+
 
 
         } else if (specButtons.indexOf(key) > -1) {
@@ -57,7 +62,8 @@ $(".black").each(function (index) {
             arrFormula.push(result,key);
 
 
-
+                $("#mod").text(equation.slice(0, -1))
+                $("#result").text(result);
 
 
 
@@ -65,16 +71,14 @@ $(".black").each(function (index) {
             console.log(equation);
             console.log(result);
 
-            $("#mod").text(equation.slice(0, -1))
-            //document.querySelector('#result').innerText = truncateText('#result', 30);
-            $("#result").text(result);
-
-            //document.querySelector('#mod').innerText = truncateText('#mod', 30);
-
-        } else {
 
 
         }
+
+         if (key) {
+             //$("#mod").append('');
+             $("#mod").append(key);
+            }
 
 
     });
@@ -86,10 +90,11 @@ $(".red").each(function (index) {
         if (key === 'ac') {
             arrFormula = [];
             $("#result").text('0');
-            $("#mod").text('0');
+            $("#mod").html('&nbsp;');
             //type in mod function
-        } else if (key == 'ce') {
+        } else if (key === 'ce') {
             arrFormula.pop();
+            $("#mod").html(key);
 //type in mod function
         }
 
