@@ -27,7 +27,7 @@ $(document).ready(function () {
 
     }
 
-    var currentStr='';
+    var currentStr=[];
     var total;
     function update(input) {
 
@@ -44,14 +44,14 @@ $(document).ready(function () {
 
             case "+":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-
-                    arrHandler.push('+');
+                    arrHandler.pop();
+                    arrHandler.push(input);
                     break
                 } else {
 
                     arrHandler.push(currentStr);
+                    currentStr = [];
                     total=eval(arrHandler.join(''));
-                    currentStr = '';
                     arrHandler = [];
                     arrHandler.push(total);
 
@@ -59,13 +59,13 @@ $(document).ready(function () {
                 }
             case "-":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-
-                    arrHandler.push('-');
+                    arrHandler.pop();
+                    arrHandler.push(input);
                     break
                 } else {
 
                     arrHandler.push(currentStr);
-                    currentStr = '';
+                    currentStr = [];
                     total=eval(arrHandler.join(''));
                     arrHandler = [];
                     arrHandler.push(total);
@@ -74,13 +74,13 @@ $(document).ready(function () {
                 }
             case "*":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-
-                    arrHandler.push('*');
+                    arrHandler.pop();
+                    arrHandler.push(input);
                     break
                 } else {
 
                     arrHandler.push(currentStr);
-                    currentStr = '';
+                    currentStr = [];
                     total=eval(arrHandler.join(''));
                     arrHandler = [];
                     arrHandler.push(total);
@@ -89,13 +89,13 @@ $(document).ready(function () {
                 }
             case "/":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
-
-                    arrHandler.push('/');
+                    arrHandler.pop();
+                    arrHandler.push(input);
                     break
                 } else {
 
                     arrHandler.push(currentStr);
-                    currentStr = '';
+                    currentStr = [];
                     total=eval(arrHandler.join(''));
                     arrHandler = [];
                     arrHandler.push(total);
@@ -109,7 +109,7 @@ $(document).ready(function () {
         }
         console.log(currentStr);
         console.log(arrHandler);
-    return $("#result").html(total);
+        return $("#result").html(total);
 
     }
 

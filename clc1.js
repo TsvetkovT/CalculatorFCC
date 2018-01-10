@@ -1,4 +1,7 @@
 /**
+ * Created by TT on 8.01.18 г..
+ */
+/**
  * Created by TT on 6.01.18 г..
  */
 
@@ -11,7 +14,7 @@ $(document).ready(function () {
     var specialBtn = ['+', '-', '/', '*', '%'];
     var arrHandler = [];
     var sign = '';
-
+    var val2 = '';
 
 
     var matchPattern = /[^\s()*/%+-]+/g;
@@ -45,20 +48,27 @@ $(document).ready(function () {
                 break
 
             case "+":
-                if (currentStr === '' && sign === ''){
-                    sign = input;
-                    arrHandler.push(sign);
-                } else if (currentStr !== '' && sign === '' && arrHandler.length === 1){
+
+                if (arrHandler.length===0 && specialBtn.includes(input) === false){
                     arrHandler.push(currentStr);
-                } else if (currentStr !== '' && sign === '' && arrHandler.length === 2){
-                    arrHandler.push(sign);
-                } else if (currentStr === '' && sign !== '' && arrHandler.length === 1) {
-                    arrHandler.push(currentStr);
-                } else if (currentStr !== '' && sign !== '' && arrHandler.length === 2) {
-                    total = currentStr;
-                    arrHandler.push(total);
+                } else if (arrHandler.length === 0 && specialBtn.includes(input) === true ){
+                    arrHandler.push(input);
+
                 }
-            break;
+                else if (arrHandler.length===1 && specialBtn.includes(input) === true){
+                    arrHandler.pop();
+                    arrHandler.push(input);
+                } else if (arrHandler.length === 1 && specialBtn.includes(arrHandler[1]) === true) {
+
+                    arrHandler = [];
+                    arrHandler.push(input);
+                } else if (arrHandler.length > 1 && arrHandler.length === 2) {
+                    total = eval(arrHandler.join(''));
+                    arrHandler.push(total,input);
+                }
+                break;
+
+
 
             case "-":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
@@ -107,12 +117,15 @@ $(document).ready(function () {
                 }
 
             default:
-                currentStr += input;
+               currentStr += input;
+
+
+
 
         }
-        console.log(currentStr);
+        console.log("currentStr is:  " + currentStr);
         console.log(arrHandler);
-    return $("#result").html(total);
+        return $("#result").html(total);
 
     }
 
