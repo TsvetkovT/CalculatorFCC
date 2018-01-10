@@ -10,8 +10,8 @@ $(document).ready(function () {
 
     var specialBtn = ['+', '-', '/', '*', '%'];
     var arrHandler = [];
-    var val1 = '';
-    var val2 = '';
+    var sign = '';
+
 
 
     var matchPattern = /[^\s()*/%+-]+/g;
@@ -45,20 +45,20 @@ $(document).ready(function () {
                 break
 
             case "+":
-                if(currentStr!='' && specialBtn.includes(arrHandler[arrHandler.length-1]) === false){
-                    arrHandler.push(currentStr,input);
-                } else if(currentStr==='' && specialBtn.includes(arrHandler[arrHandler.length-1]) === true){
-                    arrHandler.pop();
-                    arrHandler.push('0',input);
-                } else if (currentStr!='' && specialBtn.includes(arrHandler[arrHandler.length-1]) === true){
-                    arrHandler.pop();
-                    arrHandler.push(input);
+                if (currentStr === '' && sign === ''){
+                    sign = input;
+                    arrHandler.push(sign);
+                } else if (currentStr !== '' && sign === '' && arrHandler.length === 1){
+                    arrHandler.push(currentStr);
+                } else if (currentStr !== '' && sign === '' && arrHandler.length === 2){
+                    arrHandler.push(sign);
+                } else if (currentStr === '' && sign !== '' && arrHandler.length === 1) {
+                    arrHandler.push(currentStr);
+                } else if (currentStr !== '' && sign !== '' && arrHandler.length === 2) {
                     total = currentStr;
-                }else if(currentStr!='' && specialBtn.includes(arrHandler[arrHandler.length-1]){
-
+                    arrHandler.push(total);
                 }
-
-
+            break;
 
             case "-":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
@@ -107,10 +107,10 @@ $(document).ready(function () {
                 }
 
             default:
-                val1 = currentStr + input;
+                currentStr += input;
 
         }
-        console.log(val1);
+        console.log(currentStr);
         console.log(arrHandler);
     return $("#result").html(total);
 
