@@ -47,6 +47,15 @@ $(".black").each(function (index) {
         } else if (specButtons.includes(key) === true && arrFormula.length == 0) {
             arrFormula.push('0', key);
 
+            //handling point
+
+
+        } else if (point.includes(key) === true) {
+            if(point.includes(arrFormula[arrFormula.length] === true)){
+                arrFormula.pop();
+            } else {
+                arrFormula.push(key);
+            }
 
 
 
@@ -58,14 +67,6 @@ $(".black").each(function (index) {
                 arrFormula.push(key);
                 arrFormula.pop();
 
-                //handling point
-
-            } else if (point.includes(key) === true && point.includes(arrFormula[arrFormula.length - 1]) === true) {
-                arrFormula.pop();
-
-            } else {
-                arrFormula.push(key);
-                arrFormula.pop();
 
             }
             arrFormula.push(key);
