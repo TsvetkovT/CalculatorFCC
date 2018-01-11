@@ -39,6 +39,7 @@ $(".black").each(function (index) {
         if (specButtons.indexOf(key) < 0 && arrFormula !== []) {
 
             arrFormula.push(key);
+            console.log(arrFormula);
 
         } else if (specButtons.includes(key) === true && arrFormula.length == 0){
             arrFormula.push('0',key);
@@ -58,8 +59,9 @@ $(".black").each(function (index) {
             arrFormula.push(key);
             equation = arrFormula.join('');
             result = eval(equation.slice(0, -1));
+
             arrFormula = [];
-            arrFormula.push(result,key);
+            arrFormula.push(result.toString(),key);
 
 
                 $("#mod").text(equation.slice(0, -1))
@@ -67,19 +69,49 @@ $(".black").each(function (index) {
 
 
 
-            console.log(arrFormula);
-            console.log(equation);
-            console.log(result);
+
+           // console.log(equation);
+           // console.log(result);
 
 
 
         }
 
-         if (key) {
-             //$("#mod").append('');
-             $("#mod").append(key);
-            }
+        if (key) {
 
+            $("#mod").append(key);
+            var currentStr = $("#mod").text();
+            console.log("currentStr is: " + currentStr);
+
+                 if(key == "." && currentStr[currentStr.length - 1] == '.' || currentStr.indexOf('.') > -1){
+                     arrFormula.pop();
+                     } else {
+                         currentStr += key;
+
+                     }
+                     
+
+
+
+
+
+        }
+
+
+
+
+        // if (key == '.') {
+        //
+        //     if (arrFormula[arrFormula.length - 1] !== '.') {
+        //         //arrFormula.pop();
+        //         arrFormula.push(key);
+        //         //arrFormula.pop();
+        //     } else if (arrFormula[arrFormula.length - 1] == '.') {
+        //         arrFormula.pop();
+        //         arrFormula.push(key);
+        //        // arrFormula.pop();
+        //     }
+        // }
 
     });
 });
@@ -93,8 +125,13 @@ $(".red").each(function (index) {
             $("#mod").html('&nbsp;');
             //type in mod function
         } else if (key === 'ce') {
-            arrFormula.pop();
-            $("#mod").html(key);
+            if(arrFormula.length===0 || arrFormula.length===1){
+                $("#mod").html('&nbsp;');
+                arrFormula.pop();
+            } else {
+                arrFormula.pop();
+                $("#mod").html(arrFormula);
+            }
 //type in mod function
         }
 
