@@ -30,30 +30,48 @@ $(".black").each(function (index) {
         var key = $(this).attr('value');
         var result = '';
         var equation = '';
-        var specButtons = ['/', '*', '-', '+', '%', '='];
+        var pointIndex = 0;
+        var currentStr = $("#mod").text();
+        var specButtons = ['/', '*', '-', '+', '='];
         var point = ['.'];
 
 
 
 
-        if (specButtons.indexOf(key) < 0 && arrFormula !== []) {
+        while (specButtons.indexOf(key) < 0 && arrFormula !== []) {
 
-            arrFormula.push(key);
-            console.log(arrFormula);
 
-        } else if (specButtons.includes(key) === true && arrFormula.length == 0){
+
+            if (point.includes(key) === true && arrFormula[arrFormula.length - 1] == '.') {
+
+                arrFormula.pop();
+                arrFormula.push(key);
+                pointIndex = arrFormula.indexOf('.');
+                break;
+            }
+            else if (arrFormula.indexOf('.', pointIndex) > 0 && point.includes(key) === true) {
+                break;
+            } else {
+                arrFormula.push(key);
+                console.log(arrFormula);
+                break;
+
+
+            }
+
+        }
+        if (specButtons.includes(key) === true && arrFormula.length == 0){
             arrFormula.push('0',key);
 
 
 
         } else if (specButtons.indexOf(key) > -1) {
 
+
             if (specButtons.indexOf(arrFormula[arrFormula.length - 1]) > -1) {
                 arrFormula.pop();
                 arrFormula.push(key);
                 arrFormula.pop();
-
-                // arrFormula.reduce(function(a,b) {return b;});
 
             }
             arrFormula.push(key);
@@ -64,7 +82,7 @@ $(".black").each(function (index) {
             arrFormula.push(result.toString(),key);
 
 
-                $("#mod").text(equation.slice(0, -1))
+                //$("#mod").text(equation.slice(0, -1))
                 $("#result").text(result);
 
 
@@ -78,22 +96,8 @@ $(".black").each(function (index) {
         }
 
         if (key) {
-
-            $("#mod").append(key);
-            var currentStr = $("#mod").text();
-            console.log("currentStr is: " + currentStr);
-
-                 if(key == "." && currentStr[currentStr.length - 1] == '.' || currentStr.indexOf('.') > -1){
-                     arrFormula.pop();
-                     } else {
-                         currentStr += key;
-
-                     }
-                     
-
-
-
-
+           $("#mod").html(arrFormula.join(''));
+           pointIndex = arrFormula.indexOf('.');
 
         }
 
