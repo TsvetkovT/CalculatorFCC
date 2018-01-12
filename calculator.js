@@ -29,14 +29,19 @@ function truncateText(selector, maxLength) {
 /** ========================= **/
 
 /** Round result function **/
-function roundResult(arr) {
+function roundResult(res, restriction) {
     var rightDecimal1 = 0; //defines the number of numbers after decimal point for left value in equation (arrFotmula[0])
     var rightDecimal2 = 0; //defines the number of numbers after decimal point for right value in equation (number of array element after '.')
+    var wholeNum = res.slice(0, res.indexOf('.'));
+    var decimalPart = res.slice(res.indexOf('.') + 1, res.length)
 
-    rightDecimal1 = arr[0].substring(arr[0].indexOf(".") + 1);
-    rightDecimal1 = rightDecimal1.length;
+    if (wholeNum.length >= restriction){
+        res = res.slice(0,restriction);
+    } else if ((wholeNum + decimalPart) > 10 ) {
+        
+    }
 
-    return rightDecimal1;
+
 
 }
 
@@ -99,22 +104,25 @@ $(".black").each(function (index) {
             arrFormula.push(key);
             equation = arrFormula.join('');
             result = eval(equation.slice(0, -1));
-            result = result.toString();
-            var precision = result.substring(result.indexOf(".") + 1).length;
+
+            // var precVal1 = (result.toString()).substring((result.toString()).indexOf(".")).length;
+            // var precVal2 = (arrFormula.slice(arrFormula.indexOf('.') + 1, arrFormula.length)).length;
+            // //var precision = precVal1 + precVal2;
+            // var precision = precVal2 + 2;
+            // console.log("precision is: " + precision)
 
 
             arrFormula = [];
-            arrFormula.push(result.toPrecision(precision),key);
 
-
-                //$("#mod").text(equation.slice(0, -1))
+            //    result = (result.toString()).substring(0, 10);
+                arrFormula.push(result, key);
                 $("#result").text(result);
 
 
 
 
            // console.log(equation);
-           // console.log(result);
+
 
 
 
