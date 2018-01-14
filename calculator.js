@@ -34,7 +34,7 @@ function roundResult(res, restriction) {
     var wholeNum = res.slice(0, res.indexOf('.'));
     var decimalPart = res.slice(res.indexOf('.') + 1, res.length);
 
-    if (wholeNum.length > restriction && res > restriction || decimalPart.length > restriction) {
+    if (wholeNum.length > restriction && res > restriction) { //|| decimalPart.length > restriction) {
         res.slice(0, restriction);
         return wholeNum + 'e0e-1';
 
