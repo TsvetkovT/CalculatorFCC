@@ -30,19 +30,33 @@ function truncateText(selector, maxLength) {
 
 /** Round result function **/
 function roundResult(res, restriction) {
-    var rightDecimal1 = 0; //defines the number of numbers after decimal point for left value in equation (arrFotmula[0])
-    var rightDecimal2 = 0; //defines the number of numbers after decimal point for right value in equation (number of array element after '.')
+
     var wholeNum = res.slice(0, res.indexOf('.'));
-    var decimalPart = res.slice(res.indexOf('.') + 1, res.length)
+    var decimalPart = res.slice(res.indexOf('.') + 1, res.length);
 
-    if (wholeNum.length >= restriction){
-        res = res.slice(0,restriction);
-    } else if ((wholeNum + decimalPart) > 10 ) {
-        
+    if (wholeNum.length > restriction && res > restriction || decimalPart.length > restriction) {
+        res.slice(0, restriction);
+        return wholeNum + 'e0e-1';
+
+    } else if (res.length <= restriction) {
+        return res;
+
+    } else if (res.length > restriction && wholeNum.length < restriction) {
+
+        var precision;
+        if (wholeNum.length >= decimalPart.length) {
+            precision = wholeNum.length - (res.length - restriction);
+
+            return Number(res).toFixed(precision);
+
+        } else if (wholeNum.length < decimalPart) {
+            precision = decimalPart.length - (res.length - restriction);
+
+            return Number(res).toFixed(precision);
+        }
+
+
     }
-
-
-
 }
 
 
@@ -59,9 +73,6 @@ $(".black").each(function (index) {
 
         // For the key value
         var key = $(this).attr('value');
-
-
-
 
 
         while (specButtons.indexOf(key) < 0 && arrFormula !== []) {
@@ -105,23 +116,20 @@ $(".black").each(function (index) {
             equation = arrFormula.join('');
             result = eval(equation.slice(0, -1));
 
-            // var precVal1 = (result.toString()).substring((result.toString()).indexOf(".")).length;
-            // var precVal2 = (arrFormula.slice(arrFormula.indexOf('.') + 1, arrFormula.length)).length;
-            // //var precision = precVal1 + precVal2;
-            // var precision = precVal2 + 2;
-            // console.log("precision is: " + precision)
-
 
             arrFormula = [];
 
             //    result = (result.toString()).substring(0, 10);
-                arrFormula.push(result, key);
-                $("#result").text(result);
 
-
-
-
-           // console.log(equation);
+                var rounded = roundResult(result.toString(),10)
+                arrFormula.push(parseFloat(rounded), key);
+            if (isNaN(rounded)) {
+                $("#result").html('invalid' + ' e+10');
+            } else {
+                $("#result").html(parseFloat(rounded));
+            }
+                //console.log("result is:" + result.toString());
+                //console.log("roundResult: " + (roundResult(result.toString(),10)));
 
 
 
@@ -129,8 +137,27 @@ $(".black").each(function (index) {
         }
 
         if (key) {
-           $("#mod").html(arrFormula.join(''));
-           pointIndex = arrFormula.indexOf('.');
+
+            if (specButtons.includes(key)) {
+                $("#mod").html(parseFloat(rounded) + key);
+
+
+            } else {
+                $("#mod").html(arrFormula.join(''));
+            }
+
+            var str = $("#mod").html();
+
+            if (str.length > 22){
+
+                $("#mod").text('long number, press CE');
+            }
+
+
+
+
+            console.log("str is: " + str);
+            pointIndex = arrFormula.indexOf('.');
 
         }
 
