@@ -7,8 +7,7 @@ var arrFormula = [];
 var result = '';
 var equation = '';
 var pointIndex = 0; //defines the position of the decimal point in arrFormula array
-//var currentStr = $("#mod").text();
-var specButtons = ['/', '*', '-', '+', '='];
+var specButtons = ['/', '*', '-', '+', '=', '%'];
 var point = ['.'];
 
 /** ========================= **/
@@ -114,12 +113,26 @@ $(".black").each(function (index) {
             }
             arrFormula.push(key);
             equation = arrFormula.join('');
-            result = eval(equation.slice(0, -1));
+
+            //handle percent
+            if(equation.includes('%') == true) {
+                var signIndex = arrFormula.slice(2, arrFormula.length - 1).join(''); //second operator to be calculated next
+                var replacement = (arrFormula[0]).toString() + '*' + signIndex + "/100"; //replaces % sign in equation
+                replacement = eval(replacement);
+
+                equation = equation.replace('%', replacement);  //replacing % sign in eval
+                result = eval(result + arrFormula[1] + replacement);  //calculation of result, respective sign arrFormula[1] and replacement
+            } else {
+                result = eval(equation.slice(0, -1));
+
+            }
+
+
 
 
             arrFormula = [];
 
-            //    result = (result.toString()).substring(0, 10);
+
 
                 var rounded = roundResult(result.toString(),10)
                 arrFormula.push(parseFloat(rounded), key);
@@ -128,7 +141,7 @@ $(".black").each(function (index) {
             } else {
                 $("#result").html(parseFloat(rounded));
             }
-                //console.log("result is:" + result.toString());
+            console.log("equation is:" + equation);
                 //console.log("roundResult: " + (roundResult(result.toString(),10)));
 
 
