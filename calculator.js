@@ -37,8 +37,9 @@ function roundResult(res, restriction) {
 
     if (wholeNum.length >= restriction){
         res = res.slice(0,restriction);
+        return res;
     } else if ((wholeNum + decimalPart) > 10 ) {
-        
+
     }
 
 
@@ -116,7 +117,7 @@ $(".black").each(function (index) {
 
             //    result = (result.toString()).substring(0, 10);
                 arrFormula.push(result, key);
-                $("#result").text(result);
+                $("#result").text(roundResult(result.toString(),10));
 
 
 
