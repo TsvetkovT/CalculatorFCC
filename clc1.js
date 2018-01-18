@@ -45,7 +45,7 @@ $(document).ready(function () {
                     currentStr += input;
 
                 }
-                break
+                break;
 
             case "+":
 
@@ -145,4 +145,4 @@ $(document).ready(function () {
     })
 
 
-})
+});

@@ -40,7 +40,7 @@ $(document).ready(function () {
                     currentStr += input;
 
                 }
-                break
+                break;
 
             case "+":
                 if (specialBtn.includes(currentStr[currentStr.length-1]) === true){
@@ -129,4 +129,4 @@ $(document).ready(function () {
     })
 
 
-})
+});

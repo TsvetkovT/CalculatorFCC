@@ -2,6 +2,10 @@ body {
     background-color: black;
 }
 
+.container {
+    padding: 50px;
+}
+
 .container-fluid {
     width:100%;
 
